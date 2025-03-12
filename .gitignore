@@ -3,7 +3,7 @@
 *.a
 *.so
 
-*.zip
+**/*.zip
 
 # custom
-./midterm/foo/*
+./midterm/foo
