@@ -1,0 +1,9 @@
+*.s
+*.o
+*.a
+*.so
+
+*.zip
+
+# custom
+./midterm/foo/*
