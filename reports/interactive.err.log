@@ -53,7 +53,7 @@ plotdf = plotdf.to_pandas()
 
 [31m---------------------------------------------------------------------------[39m
 [31mModuleNotFoundError[39m                       Traceback (most recent call last)
-[32m/tmp/ipykernel_1982/2432904399.py[39m in [36m?[39m[34m()[39m
+[32m/tmp/ipykernel_2017/2432904399.py[39m in [36m?[39m[34m()[39m
 [32m     16[39m     df_feat.filter(
 [32m     17[39m         (pl.col([33m"pi_id"[39m) == dev) & (pl.col([33m"run_id"[39m) == chosen[dev])
 [32m     18[39m     )
