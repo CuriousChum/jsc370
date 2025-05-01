@@ -1,0 +1,178 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+# same colour dict you already use
+STATE_COLORS = {
+    "mining":    "#d62728",
+    "streaming": "#1f77b4",
+    "VR":        "#2ca02c",
+    "idle":      "#8c564b",
+}
+
+# ------------------------------------------------------------------
+def plot_time_series_plotly(plotdf, colname, show=True):
+    """
+    One interactive plotly trace + translucent state bands.
+
+    Returns a go.Figure.
+    """
+    fig = go.Figure()
+
+    # main line
+    fig.add_trace(go.Scatter(
+        x=plotdf["time"],
+        y=plotdf[colname],
+        name=colname,
+        mode="lines",
+        line=dict(width=2, color="black"),
+        hovertemplate=f"time=%{{x}}<br>{colname}=%{{y}}<extra></extra>"
+    ))
+
+    # translucent blocks for each contiguous state run
+    ymin, ymax = plotdf[colname].min(), plotdf[colname].max()
+    for state, color in STATE_COLORS.items():
+        mask = plotdf["state"] == state
+        if not mask.any():
+            continue
+        # find contiguous True segments
+        edges = mask.astype(int).diff().fillna(0)
+        starts = plotdf["time"][edges == 1]
+        ends   = plotdf["time"][edges == -1]
+
+        # handle run that goes to the end
+        if mask.iloc[0]:
+            starts = pd.concat([pd.Series(plotdf["time"].iloc[0]), starts])
+        if mask.iloc[-1]:
+            ends = pd.concat([ends, pd.Series(plotdf["time"].iloc[-1])])
+
+        for s, e in zip(starts, ends):
+            fig.add_shape(
+                type="rect",
+                x0=s, x1=e,
+                y0=ymin, y1=ymax,
+                fillcolor=color,
+                opacity=0.25,
+                line_width=0,
+                layer="below",
+            )
+
+    # legend proxy squares
+    for st, color in STATE_COLORS.items():
+        fig.add_trace(go.Scatter(
+            x=[None], y=[None],
+            mode="markers",
+            marker=dict(size=10, color=color, opacity=0.4),
+            showlegend=True,
+            name=st,
+            hoverinfo="skip"
+        ))
+
+    fig.update_layout(
+        margin=dict(l=60, r=30, t=40, b=40),
+        xaxis_title="time",
+        yaxis_title=colname,
+        legend_title="states",
+    )
+
+    if show:
+        fig.show()
+    return fig
+
+# ------------------------------------------------------------------
+def plot_mult_time_series_plotly(df, colnames, ylabs=None, titles=None,
+                                 suptitle=None, shared_x=True, height=300):
+    """
+    Create one vertically-stacked interactive figure with n rows.
+
+    Returns a plotly.graph_objects.Figure
+    """
+    n = len(colnames)
+    ylabs   = colnames if ylabs  is None else ylabs
+    titles  = colnames if titles is None else titles
+    specs   = [[{}] for _ in range(n)]
+
+    fig = make_subplots(rows=n, cols=1,
+                        shared_xaxes=shared_x,
+                        vertical_spacing=0.04,
+                        subplot_titles=titles,
+                        specs=specs)
+
+    for i, col in enumerate(colnames, start=1):
+        subfig = plot_time_series_plotly(df, col, show=False)
+        # add every trace & shape to the big canvas
+        for tr in subfig.data:
+            fig.add_trace(tr, row=i, col=1)
+        for sh in subfig.layout.shapes or []:
+            fig.add_shape(sh, row=i, col=1)
+
+        fig.update_yaxes(title_text=ylabs[i-1], row=i, col=1)
+
+    if suptitle:
+        fig.update_layout(title_text=suptitle, title_x=0.5)
+
+    fig.update_layout(height=height*n,
+                      legend_title="states",
+                      margin=dict(l=60, r=30, t=60 if suptitle else 30, b=40))
+    fig.show()
+    return fig
+
+
+def add_lags(grp, n_lags=3):
+    for k in range(1, n_lags + 1):
+        grp = grp.with_columns(
+            pl.col("temp").shift(k).alias(f"temp_lag{k}"),
+            pl.col("cpu").shift(k).alias(f"cpu_lag{k}")
+        )
+    return grp.drop_nulls(subset=[f"temp_lag{n_lags}"])
+
+np.random.seed(1000)
+chosen = {}
+for dev, runs in df_all[["pi_id", "run_id"]].unique().group_by("pi_id"):
+    chosen[dev[0]] = np.random.choice(runs["run_id"], size=1)[0]
+
+def sample_section(df):
+    n_take = math.ceil(len(df) * 0.1)
+    start = np.random.randint(0, len(df) - n_take)  
+    return df[start:start + n_take - 1] # be safe, don't crash for no reason
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mModuleNotFoundError[39m                       Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[3][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mplotly[39;00m[34;01m.[39;00m[34;01mgraph_objects[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mgo[39;00m
+[32m      2[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mplotly[39;00m[34;01m.[39;00m[34;01msubplots[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m make_subplots
+[32m      4[39m [38;5;66;03m# same colour dict you already use[39;00m
+
+[31mModuleNotFoundError[39m: No module named 'plotly'
+

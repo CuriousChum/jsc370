@@ -1,0 +1,935 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analysis on the Relationship CPU Utilization and Temperature on Raspberry Pi Devices &#8212; JSC370 Final Project</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'midterm';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Interactive Visualizations" href="hw5_eda.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">JSC370 Final Project</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Analysis on the Relationship CPU Utilization and Temperature on Raspberry Pi Devices
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="hw5_eda.html">Interactive Visualizations</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CuriousChum/jsc370" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CuriousChum/jsc370/issues/new?title=Issue%20on%20page%20%2Fmidterm.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/midterm.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analysis on the Relationship CPU Utilization and Temperature on Raspberry Pi Devices</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#research-question">Research Question</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-description">Dataset Description</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-wrangling">Data Wrangling</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis">Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over Time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-per-device-per-state">Comparison per Device per State</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling">Modelling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analysis-on-the-relationship-cpu-utilization-and-temperature-on-raspberry-pi-devices">
+<h1>Analysis on the Relationship CPU Utilization and Temperature on Raspberry Pi Devices<a class="headerlink" href="#analysis-on-the-relationship-cpu-utilization-and-temperature-on-raspberry-pi-devices" title="Link to this heading">#</a></h1>
+<p>Link to Github page: <a class="github reference external" href="https://github.com/CuriousChum/jsc370">CuriousChum/jsc370</a></p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<section id="background">
+<h3>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h3>
+<p>Edge computing devices such as Raspberry Pis have started gaining popularity due to their minimal design and affordable price tag. Unlike their bulkier counterpart, Raspberry Pis are small, yet powerful enough to act as a miniature personal computer (PC). This makes them suitable for specialized tasks such as gathering field data. However, due to their size and the rising demand in performance, the temperature within the device motherboard can rise quickly. The motherboard, being in the center of the device, is affected by the activity of peripheral devices and may wear out from intensive use.</p>
+<p>This analysis aims explores the relationship between device resources utilization and temperature across different Raspberry Pi specifications. The goal is to understand how different workloads affect device temperature (as measured by sensors in the motherboard) and whether this relationship can be used to predict thermal behavior under various application usages and resource utilization. This information is valuable for optimizing edge computing applications by anticipating device wear out and CPU throttling due to overheating.</p>
+</section>
+<section id="research-question">
+<h3>Research Question<a class="headerlink" href="#research-question" title="Link to this heading">#</a></h3>
+<p>How does resource utilization affect device temperature across different Raspberry Pi configurations and application states, and can we identify patterns in this relationship to predict overall device temperature?</p>
+</section>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading">#</a></h2>
+<section id="dataset-description">
+<h3>Dataset Description<a class="headerlink" href="#dataset-description" title="Link to this heading">#</a></h3>
+<p>The dataset used in this analysis was constructed and collected by researched is the Queen’s Telecommunation Research Lab (TRL), led by Ruslan Kain. It contains resource usage information from four heterogeneous Raspberry Pi 4 devices, with different RAM sizes (2GB, 4GB, 8GB) and CPU frequencies (1200MHz, 1500MHz, 1800MHz), measured under different application usages including gaming, streaming, augmented reality, mining, and idling. The data is collected in ~5 second intervals using the <code class="docutils literal notranslate"><span class="pre">PsUtil</span></code> Python package.</p>
+<p>The dataset includes measurements from usages with random and periodic workloads using different Raspberry Pis. Each <code class="docutils literal notranslate"><span class="pre">.tab</span></code> file in the dataset contains data on a ‘run’ of a device. The tables are denoted as <code class="docutils literal notranslate"><span class="pre">&lt;device</span> <span class="pre">specification&gt;_res_usage_data_*.tab</span></code>. The runs included in this analysis are only from files that matches the following pattern: <code class="docutils literal notranslate"><span class="pre">&lt;device</span> <span class="pre">specification&gt;_res_usage_data_rvp_*.tab</span></code>.</p>
+<p><a class="reference internal" href="#tbl-vars"><span class="std std-numref">Table 1</span></a> lists all the variables regarding to device resource information during each run of the Raspberry Pi 4s that is given in the dataset.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="tbl-vars">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Variable Descriptions</span><a class="headerlink" href="#tbl-vars" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cpu</span></code></p></td>
+<td><p>System-wide CPU utilization as a percentage (%)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cpu_freq</span></code></p></td>
+<td><p>System-wide CPU cycle frequency (MHz)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">state</span></code></p></td>
+<td><p>Label feature for the resource-usage state of the device associated with the running application</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">memory</span></code></p></td>
+<td><p>Memory currently in use or very recently used, as a percentage of RAM (%)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">net_upload_rate</span></code></p></td>
+<td><p>Number of bytes sent in the last time interval, divided by the time interval (MBytes/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">net_download_rate</span></code></p></td>
+<td><p>Number of bytes received in the last time interval, divided by the time interval (MBytes/s)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">temp</span></code></p></td>
+<td><p>Device temperature (°C)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data-wrangling">
+<h3>Data Wrangling<a class="headerlink" href="#data-wrangling" title="Link to this heading">#</a></h3>
+<p>The dataset contains a lot of columns, some of which are redundant, filled with only zeros, or describes irrelevant information; these columns will thus be dropped from the analysis.</p>
+<p>First, columns describing CPU time spent will be dropped since the focus is mainly on overall CPU utilization, so <code class="docutils literal notranslate"><span class="pre">cpu</span></code> and <code class="docutils literal notranslate"><span class="pre">cpu_freq</span></code> is sufficient. Manual inspection of the data shows that the columns <code class="docutils literal notranslate"><span class="pre">gpu</span></code> and <code class="docutils literal notranslate"><span class="pre">gpu_memory</span></code> are always zero, implying that the builtin GPU is not utilized in any of the workloads, so it is drop. Furthermore, the columns <code class="docutils literal notranslate"><span class="pre">link_quality_max</span></code> and <code class="docutils literal notranslate"><span class="pre">link_quality</span></code> are dropped because of the lack of documentation; the exact descriptions cannot be found in the <code class="docutils literal notranslate"><span class="pre">PsUtil</span></code> package. Finally, the columns <code class="docutils literal notranslate"><span class="pre">wifi_freq</span></code>, <code class="docutils literal notranslate"><span class="pre">net_sent</span></code>, and <code class="docutils literal notranslate"><span class="pre">net_recv</span></code> are dropped because these are already better represented by <code class="docutils literal notranslate"><span class="pre">net_upload_rate</span></code> and <code class="docutils literal notranslate"><span class="pre">net_download_rate</span></code>; note that <code class="docutils literal notranslate"><span class="pre">wifi_freq</span></code> is not indicative of device resource usage and both <code class="docutils literal notranslate"><span class="pre">net_*</span></code> features are cumulative sums of the <code class="docutils literal notranslate"><span class="pre">net_*_rate</span></code>s, respectively.</p>
+<p>Next, the tables from the dataset will be combined while preserving per-device and per-run information using the columns <code class="docutils literal notranslate"><span class="pre">pi_id</span></code> and <code class="docutils literal notranslate"><span class="pre">run_id</span></code>, respectively. For brevity, the devices will be denoted as follows</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dev0</span></code>: Raspberry Pi 4, 2GB RAM, 1200 MHz</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dev1</span></code>: Raspberry Pi 4, 2GB RAM, 1500 MHz</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dev2</span></code>: Raspberry Pi 4, 4GB RAM, 1500 MHz</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dev3</span></code>: Raspberry Pi 4, 8GB RAM, 1800 MHz</p></li>
+</ul>
+<p>Meanwhile, <code class="docutils literal notranslate"><span class="pre">run_id</span></code> ranges from <code class="docutils literal notranslate"><span class="pre">000</span></code> to <code class="docutils literal notranslate"><span class="pre">018</span></code>, each table in the initial dataset is considered a different run, irrespective of the device.</p>
+<p>The final pruned dataset contains columns that is described in <a class="reference internal" href="#tbl-vars-pruned"><span class="std std-numref">Table 2</span></a>.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="tbl-vars-pruned">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Pruned Variable Descriptions</span><a class="headerlink" href="#tbl-vars-pruned" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cpu</span></code></p></td>
+<td><p>System-wide CPU utilization as a percentage (%)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cpu_freq</span></code></p></td>
+<td><p>System-wide CPU cycle frequency (MHz)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">state</span></code></p></td>
+<td><p>Label feature for the resource-usage state of the device associated with the running application</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">memory</span></code></p></td>
+<td><p>Memory currently in use or very recently used, as a percentage of RAM (%)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">net_upload_rate</span></code></p></td>
+<td><p>Number of bytes sent in the last time interval, divided by the time interval (MBytes/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">net_download_rate</span></code></p></td>
+<td><p>Number of bytes received in the last time interval, divided by the time interval (MBytes/s)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">temp</span></code></p></td>
+<td><p>Device temperature (°C)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pi_id</span></code></p></td>
+<td><p>Device id, one of <code class="docutils literal notranslate"><span class="pre">dev0</span></code>, <code class="docutils literal notranslate"><span class="pre">dev1</span></code>, <code class="docutils literal notranslate"><span class="pre">dev2</span></code>, <code class="docutils literal notranslate"><span class="pre">dev3</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">run_id</span></code></p></td>
+<td><p>Run id, ranges from <code class="docutils literal notranslate"><span class="pre">000</span></code> to <code class="docutils literal notranslate"><span class="pre">018</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+</section>
+<section id="exploratory-data-analysis">
+<h2>Exploratory Data Analysis<a class="headerlink" href="#exploratory-data-analysis" title="Link to this heading">#</a></h2>
+<p>Since each run is a time-series data, comparing each feature directly might not be ideal. Instead, the comparison will either be done over time, or on the differences.</p>
+<section id="comparison-over-time">
+<h3>Comparison over Time<a class="headerlink" href="#comparison-over-time" title="Link to this heading">#</a></h3>
+<p>Since it’s infeasible to visualize and compare all runs with more than 30,000 observations, we instead sample one run from different devices and look at random sections within it. <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-time0</span></code>, <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-time1</span></code>, <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-time2</span></code>, <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-time3</span></code> are sections of runs that are chosen uniformly at random for each device.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+<figure class="align-center" id="fig-time0">
+<img alt="images/fig-time0.png" src="images/fig-time0.png" />
+</figure>
+<figure class="align-center" id="fig-time1">
+<img alt="images/fig-time1.png" src="images/fig-time1.png" />
+</figure>
+<figure class="align-center" id="fig-time2">
+<img alt="images/fig-time2.png" src="images/fig-time2.png" />
+</figure>
+<figure class="align-center" id="fig-time3">
+<img alt="images/fig-time3.png" src="images/fig-time3.png" />
+</figure>
+<p>Firstly, for completeness, as mentioned before, we notice that GPU activity is nonexistent, and so it is dropped.
+The plots shows several notable things: device temperature tends to move to a certain semi-constant value on each state, similarly CPU usage tends to move to a constant value with some occasional jumps every state. CPU frequency, however, appears to erratically jump from high to low, this is a phenomenon called throttling, where the CPU dynamically changes its frequency due to some circumstance, either due to low usage (as to preserve energy), or due to overheating, which is not seen here.
+Finally, we see that the network activity is relevant when the device is streaming, specifically, the download rate increases. However, on any other states, the device shows little to no network activity, so the upload rate will be  dropped from future analyses.</p>
+</section>
+<section id="comparison-per-device-per-state">
+<h3>Comparison per Device per State<a class="headerlink" href="#comparison-per-device-per-state" title="Link to this heading">#</a></h3>
+<p>Then, we visualize the distribution of features per device colored by state. The following figures shows the aggregated distribution over all runs. Net download rate is not included in this visualization due to its very small value.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<figure class="align-center" id="fig-pa0">
+<img alt="images/pa0.png" src="images/pa0.png" />
+</figure>
+<figure class="align-center" id="fig-pa1">
+<img alt="images/pa1.png" src="images/pa1.png" />
+</figure>
+<figure class="align-center" id="fig-pa2">
+<img alt="images/pa2.png" src="images/pa2.png" />
+</figure>
+<figure class="align-center" id="fig-pa3">
+<img alt="images/pa3.png" src="images/pa3.png" />
+</figure>
+</section>
+<section id="feature-engineering">
+<h3>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Link to this heading">#</a></h3>
+<p>Resource activity data can contain a lot of noise especially for the CPU, upload/download rate (network), and temperature perhaps due to inherent jitter or measurement variance. For those columns, we will calculate a moving average to smoothen them out. The window size and weighing method is chosen based on the type of resource. Specifically, CPU and upload/download rate is unweighted, while temperature is weighted with an exponential window.</p>
+<p>Memory usage on its own does affect the utilization of other resources since this can mean nothing is going on at the moment. So, the percentage change in RAM usage is added to account for memory usage by the device for each application.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">add_lags</span><span class="p">(</span><span class="n">grp</span><span class="p">,</span> <span class="n">n_lags</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_lags</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">grp</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;temp_lag</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cpu_lag</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">grp</span><span class="o">.</span><span class="n">drop_nulls</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;temp_lag</span><span class="si">{</span><span class="n">n_lags</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+
+<span class="n">df_feat</span> <span class="o">=</span> <span class="n">df_all</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">&quot;pi_id&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map_groups</span><span class="p">(</span><span class="n">add_lags</span><span class="p">)</span>
+<span class="n">df_feat</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_feat</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
+          <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rolling_mean</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">over</span><span class="p">([</span><span class="s2">&quot;run_id&quot;</span><span class="p">])</span>
+            <span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;temp_ma&quot;</span><span class="p">),</span>
+          <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rolling_mean</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">over</span><span class="p">([</span><span class="s2">&quot;run_id&quot;</span><span class="p">])</span>
+            <span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;cpu_ma&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (656_502, 18)</small><table border="1" class="dataframe"><thead><tr><th>time_stamp</th><th>time</th><th>state</th><th>cpu</th><th>cpu_freq</th><th>memory</th><th>net_upload_rate</th><th>net_download_rate</th><th>temp</th><th>gpu</th><th>run_id</th><th>pi_id</th><th>temp_lag1</th><th>cpu_lag1</th><th>temp_lag2</th><th>cpu_lag2</th><th>temp_lag3</th><th>cpu_lag3</th></tr><tr><td>datetime[μs]</td><td>f64</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>str</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>2022-05-12 18:21:27</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>67.9</td><td>1500.0</td><td>27.5</td><td>0.000262</td><td>0.001397</td><td>43.816</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>42.355</td><td>92.1</td><td>41.381</td><td>46.4</td><td>38.459</td><td>16.9</td></tr><tr><td>2022-05-12 18:21:32</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>72.2</td><td>1500.0</td><td>27.3</td><td>0.000168</td><td>0.000372</td><td>42.355</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>43.816</td><td>67.9</td><td>42.355</td><td>92.1</td><td>41.381</td><td>46.4</td></tr><tr><td>2022-05-12 18:21:37</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>28.9</td><td>1500.0</td><td>26.8</td><td>0.000307</td><td>0.004133</td><td>43.816</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>42.355</td><td>72.2</td><td>43.816</td><td>67.9</td><td>42.355</td><td>92.1</td></tr><tr><td>2022-05-12 18:21:42</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>47.1</td><td>1500.0</td><td>27.9</td><td>0.000366</td><td>0.000353</td><td>43.329</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>43.816</td><td>28.9</td><td>42.355</td><td>72.2</td><td>43.816</td><td>67.9</td></tr><tr><td>2022-05-12 18:21:47</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>52.3</td><td>1500.0</td><td>28.7</td><td>0.000216</td><td>0.001302</td><td>43.816</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>43.329</td><td>47.1</td><td>43.816</td><td>28.9</td><td>42.355</td><td>72.2</td></tr><tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr><tr><td>2022-05-14 18:26:04</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>33.4</td><td>1000.0</td><td>28.5</td><td>0.0</td><td>8.5931e-7</td><td>63.296</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>62.809</td><td>28.6</td><td>63.783</td><td>26.5</td><td>63.296</td><td>33.1</td></tr><tr><td>2022-05-14 18:26:09</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>27.2</td><td>1200.0</td><td>28.5</td><td>1.7596e-7</td><td>8.4981e-7</td><td>62.809</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>63.296</td><td>33.4</td><td>62.809</td><td>28.6</td><td>63.783</td><td>26.5</td></tr><tr><td>2022-05-14 18:26:14</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>26.6</td><td>1200.0</td><td>28.6</td><td>2.1984e-7</td><td>0.000002</td><td>63.783</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>62.809</td><td>27.2</td><td>63.296</td><td>33.4</td><td>62.809</td><td>28.6</td></tr><tr><td>2022-05-14 18:26:19</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>41.3</td><td>1200.0</td><td>26.8</td><td>0.000001</td><td>0.000002</td><td>64.757</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>63.783</td><td>26.6</td><td>62.809</td><td>27.2</td><td>63.296</td><td>33.4</td></tr><tr><td>2022-05-14 18:26:24</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>38.1</td><td>1200.0</td><td>25.9</td><td>4.0726e-7</td><td>4.2922e-7</td><td>64.27</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>64.757</td><td>41.3</td><td>63.783</td><td>26.6</td><td>62.809</td><td>27.2</td></tr></tbody></table></div></div></div>
+</div>
+</section>
+</section>
+<section id="modelling">
+<h2>Modelling<a class="headerlink" href="#modelling" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_enc</span> <span class="o">=</span> <span class="n">df_feat</span><span class="o">.</span><span class="n">to_dummies</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;pi_id&quot;</span><span class="p">])</span>
+<span class="n">X</span>  <span class="o">=</span> <span class="n">df_enc</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">,</span> <span class="s2">&quot;time_stamp&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">)</span>
+<span class="n">X_</span> <span class="o">=</span> <span class="n">df_feat</span><span class="o">.</span><span class="n">to_dummies</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">,</span> <span class="s2">&quot;time_stamp&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">,</span> <span class="s2">&quot;pi_id&quot;</span><span class="p">)</span>
+<span class="n">y</span>  <span class="o">=</span> <span class="n">df_feat</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (656_502, 17)</small><table border="1" class="dataframe"><thead><tr><th>state_augmented_reality</th><th>state_game</th><th>state_idle</th><th>state_mining</th><th>state_stream</th><th>cpu</th><th>cpu_freq</th><th>memory</th><th>net_upload_rate</th><th>net_download_rate</th><th>gpu</th><th>temp_lag1</th><th>cpu_lag1</th><th>temp_lag2</th><th>cpu_lag2</th><th>temp_lag3</th><th>cpu_lag3</th></tr><tr><td>u8</td><td>u8</td><td>u8</td><td>u8</td><td>u8</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>67.9</td><td>1500.0</td><td>27.5</td><td>0.000262</td><td>0.001397</td><td>0</td><td>42.355</td><td>92.1</td><td>41.381</td><td>46.4</td><td>38.459</td><td>16.9</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>72.2</td><td>1500.0</td><td>27.3</td><td>0.000168</td><td>0.000372</td><td>0</td><td>43.816</td><td>67.9</td><td>42.355</td><td>92.1</td><td>41.381</td><td>46.4</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>28.9</td><td>1500.0</td><td>26.8</td><td>0.000307</td><td>0.004133</td><td>0</td><td>42.355</td><td>72.2</td><td>43.816</td><td>67.9</td><td>42.355</td><td>92.1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>47.1</td><td>1500.0</td><td>27.9</td><td>0.000366</td><td>0.000353</td><td>0</td><td>43.816</td><td>28.9</td><td>42.355</td><td>72.2</td><td>43.816</td><td>67.9</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>52.3</td><td>1500.0</td><td>28.7</td><td>0.000216</td><td>0.001302</td><td>0</td><td>43.329</td><td>47.1</td><td>43.816</td><td>28.9</td><td>42.355</td><td>72.2</td></tr><tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>33.4</td><td>1000.0</td><td>28.5</td><td>0.0</td><td>8.5931e-7</td><td>0</td><td>62.809</td><td>28.6</td><td>63.783</td><td>26.5</td><td>63.296</td><td>33.1</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>27.2</td><td>1200.0</td><td>28.5</td><td>1.7596e-7</td><td>8.4981e-7</td><td>0</td><td>63.296</td><td>33.4</td><td>62.809</td><td>28.6</td><td>63.783</td><td>26.5</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>26.6</td><td>1200.0</td><td>28.6</td><td>2.1984e-7</td><td>0.000002</td><td>0</td><td>62.809</td><td>27.2</td><td>63.296</td><td>33.4</td><td>62.809</td><td>28.6</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>41.3</td><td>1200.0</td><td>26.8</td><td>0.000001</td><td>0.000002</td><td>0</td><td>63.783</td><td>26.6</td><td>62.809</td><td>27.2</td><td>63.296</td><td>33.4</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>38.1</td><td>1200.0</td><td>25.9</td><td>4.0726e-7</td><td>4.2922e-7</td><td>0</td><td>64.757</td><td>41.3</td><td>63.783</td><td>26.6</td><td>62.809</td><td>27.2</td></tr></tbody></table></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesSplit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">mse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">XGBRegressor</span>
+
+<span class="n">tss</span> <span class="o">=</span> <span class="n">TimeSeriesSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">60</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">xgb</span> <span class="o">=</span> <span class="n">XGBRegressor</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">subsample</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">colsample_bytree</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">objective</span><span class="o">=</span><span class="s2">&quot;reg:squarederror&quot;</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="n">models</span> <span class="o">=</span> <span class="p">{</span> <span class="sa">f</span><span class="s2">&quot;dev</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span>
+    <span class="n">XGBRegressor</span><span class="p">(</span>
+        <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">subsample</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">colsample_bytree</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">objective</span><span class="o">=</span><span class="s2">&quot;reg:squarederror&quot;</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">run</span><span class="p">,</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">df_all</span><span class="p">[[</span><span class="s2">&quot;run_id&quot;</span><span class="p">,</span> <span class="s2">&quot;pi_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">():</span>
+    <span class="n">rmse1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">rmse2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;run: </span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">run_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df_all</span><span class="p">[</span><span class="s2">&quot;run_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">run</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># unwrap (val,)</span>
+    <span class="k">for</span> <span class="n">train_idx</span><span class="p">,</span> <span class="n">val_idx</span> <span class="ow">in</span> <span class="n">tss</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">run_idx</span><span class="p">):</span>
+        <span class="n">xgb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_idx</span><span class="p">])</span>
+        <span class="n">models</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_idx</span><span class="p">])</span>
+        <span class="n">y_preds1</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">val_idx</span><span class="p">])</span>
+        <span class="n">y_preds2</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_</span><span class="p">[</span><span class="n">val_idx</span><span class="p">])</span>
+        <span class="n">rmse1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">y_preds1</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">val_idx</span><span class="p">]))</span>
+        <span class="n">rmse2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">y_preds2</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">val_idx</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rmse1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rmse2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 008
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" src="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" />
+<img alt="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" src="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 012
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/c9e2805fb232be64a3d991d16a941b2e44268d2f659fc06c811ec840e2dcd754.png" src="_images/c9e2805fb232be64a3d991d16a941b2e44268d2f659fc06c811ec840e2dcd754.png" />
+<img alt="_images/62bd6138ca3850873e8f8b791f1b57510f92cdc5de81046afaf7120103d845b7.png" src="_images/62bd6138ca3850873e8f8b791f1b57510f92cdc5de81046afaf7120103d845b7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 010
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/b6d0716596e13568077b0e116c570a46831e8086d49f8ba967ac4f2413e8938b.png" src="_images/b6d0716596e13568077b0e116c570a46831e8086d49f8ba967ac4f2413e8938b.png" />
+<img alt="_images/5b7cfa1e2a9e931042c6e036131b363d14599b26a289d77e18aa92f8a9b0f59d.png" src="_images/5b7cfa1e2a9e931042c6e036131b363d14599b26a289d77e18aa92f8a9b0f59d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 002
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/b47bc6db40f159bf64f482e5e7e9fa0e6347dc9807d1476214902d0b4897279f.png" src="_images/b47bc6db40f159bf64f482e5e7e9fa0e6347dc9807d1476214902d0b4897279f.png" />
+<img alt="_images/6bebd15467e396c36e00f773cb59c096c5c65e525f438c7dfcc846fd1540f66d.png" src="_images/6bebd15467e396c36e00f773cb59c096c5c65e525f438c7dfcc846fd1540f66d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 004
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/287bf18a728d58ee78704141782a926e9be02b8d342196303cd9f6da0a23f55a.png" src="_images/287bf18a728d58ee78704141782a926e9be02b8d342196303cd9f6da0a23f55a.png" />
+<img alt="_images/cdee7adfaaf617f95fc61b7c12242bdd33ff6aa50695d16bf8eb82cd26bb87c3.png" src="_images/cdee7adfaaf617f95fc61b7c12242bdd33ff6aa50695d16bf8eb82cd26bb87c3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 014
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/4c04b576c4d972197960082f1bbad293d78001cea4b04228e6a6adbc920aba96.png" src="_images/4c04b576c4d972197960082f1bbad293d78001cea4b04228e6a6adbc920aba96.png" />
+<img alt="_images/c94498e621043b092e92e7dc79eeaf47263b7e5b3abc8196fcc5868cf6a9fe47.png" src="_images/c94498e621043b092e92e7dc79eeaf47263b7e5b3abc8196fcc5868cf6a9fe47.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 011
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/a77bf3f62f0ecefe6eba44a4c18f7fc3d66637ee8d4dfd1e2f2785e6206cfe6c.png" src="_images/a77bf3f62f0ecefe6eba44a4c18f7fc3d66637ee8d4dfd1e2f2785e6206cfe6c.png" />
+<img alt="_images/4dfb94db26f918b5a0d6bde121fd5ed5ce1fc2aed04479e37b96d2175cd426a6.png" src="_images/4dfb94db26f918b5a0d6bde121fd5ed5ce1fc2aed04479e37b96d2175cd426a6.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 009
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" src="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" />
+<img alt="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" src="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 013
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/3dfade45490e86cfc918d3e6c17eeb62495277d9145ef83b7029ce86982a3bcb.png" src="_images/3dfade45490e86cfc918d3e6c17eeb62495277d9145ef83b7029ce86982a3bcb.png" />
+<img alt="_images/227a071f0b741e72e7eac707a63c2713f19ebd035469654c3ecfc8de163c769e.png" src="_images/227a071f0b741e72e7eac707a63c2713f19ebd035469654c3ecfc8de163c769e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 015
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" src="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" />
+<img alt="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" src="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 007
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" src="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" />
+<img alt="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" src="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 000
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/eee9b42db191a9bb9a359f5495cca734290f84aa63a60d522df18432383067de.png" src="_images/eee9b42db191a9bb9a359f5495cca734290f84aa63a60d522df18432383067de.png" />
+<img alt="_images/f6a241d8f30256b6e722fc242ee587ba3872c951a0e5de79979c50045612cc2c.png" src="_images/f6a241d8f30256b6e722fc242ee587ba3872c951a0e5de79979c50045612cc2c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 006
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/c26ea36fc18aa6bd23508c518d8903d6796d5c2a11854cf1d0f3de8c19a98e40.png" src="_images/c26ea36fc18aa6bd23508c518d8903d6796d5c2a11854cf1d0f3de8c19a98e40.png" />
+<img alt="_images/9681cc3de6810e1959a54dd58e81ce1d0a7cc54cd6bffa1d1109a84473b82856.png" src="_images/9681cc3de6810e1959a54dd58e81ce1d0a7cc54cd6bffa1d1109a84473b82856.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 003
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/e86b9e61eeb15562f11793718e657d7295757deb644cc397b4c6beab300b0dce.png" src="_images/e86b9e61eeb15562f11793718e657d7295757deb644cc397b4c6beab300b0dce.png" />
+<img alt="_images/1813610f880e80b4f4f04ef8e194d8d0e5733c399301a04f0c7950b0dc9280b9.png" src="_images/1813610f880e80b4f4f04ef8e194d8d0e5733c399301a04f0c7950b0dc9280b9.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 017
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" src="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" />
+<img alt="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" src="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 001
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/05abe1793749408555120f35cff95a6b52d64d6835dce0d00044a08ef77bfd1a.png" src="_images/05abe1793749408555120f35cff95a6b52d64d6835dce0d00044a08ef77bfd1a.png" />
+<img alt="_images/5d61da216e5c5966bc4c24330ddbb66d1fd422ecd11d36d17e03045244564ee3.png" src="_images/5d61da216e5c5966bc4c24330ddbb66d1fd422ecd11d36d17e03045244564ee3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 016
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/75f1306a848e2366efc677b3c21e0b8ff4d5c0fe4e5980dc59ea92dba20aeb7a.png" src="_images/75f1306a848e2366efc677b3c21e0b8ff4d5c0fe4e5980dc59ea92dba20aeb7a.png" />
+<img alt="_images/727171d1f297523073fb891398109929f477bf33c648e5241469d3e4c16fd56d.png" src="_images/727171d1f297523073fb891398109929f477bf33c648e5241469d3e4c16fd56d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 005
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" src="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" />
+<img alt="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" src="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 018
+final mse: 286.6004638671875
+</pre></div>
+</div>
+<img alt="_images/9dd880528d004acf85b1be74e147c678f8ef825836191d5d02c106a67e4e1a19.png" src="_images/9dd880528d004acf85b1be74e147c678f8ef825836191d5d02c106a67e4e1a19.png" />
+<img alt="_images/87905fa7bd3962401daa2d3c091ca52075df8d2114730b8c3beb4f15e877d421.png" src="_images/87905fa7bd3962401daa2d3c091ca52075df8d2114730b8c3beb4f15e877d421.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>87026
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>We see that there is stark difference in CPU and memory usage for each state with each state utilizing around the same percentage of CPU utilization for each of their usage window. However, the utilization percentage for each state is similar across devices. We also observe CPU throttling in <code class="docutils literal notranslate"><span class="pre">cpu_freq</span></code>, where the CPU scales down its frequency to conserve power usage when running processes with lower utilization.</p>
+<p>Furthermore, the temperature seems to increase/decrease quickly when the CPU utilization changes rapidly due to change of device application state, and plateauing to a stable temperature that is consistent for each state. This might imply that the device temperature change has some relationship to CPU utilization.</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="hw5_eda.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Interactive Visualizations</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#research-question">Research Question</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-description">Dataset Description</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-wrangling">Data Wrangling</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis">Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over Time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-per-device-per-state">Comparison per Device per State</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling">Modelling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Louis Ryan Tan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
