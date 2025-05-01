@@ -1,6 +1,6 @@
 format: jb-book
-root: midterm
+root: final_report
 
 chapters:
-  - file: hw5_eda.ipynb
+  - file: interactive.ipynb
 
