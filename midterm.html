@@ -587,15 +587,6 @@ Finally, we see that the network activity is relevant when the device is streami
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div><style>
-.dataframe > thead > tr,
-.dataframe > tbody > tr {
-  text-align: right;
-  white-space: pre-wrap;
-}
-</style>
-<small>shape: (656_502, 18)</small><table border="1" class="dataframe"><thead><tr><th>time_stamp</th><th>time</th><th>state</th><th>cpu</th><th>cpu_freq</th><th>memory</th><th>net_upload_rate</th><th>net_download_rate</th><th>temp</th><th>gpu</th><th>run_id</th><th>pi_id</th><th>temp_lag1</th><th>cpu_lag1</th><th>temp_lag2</th><th>cpu_lag2</th><th>temp_lag3</th><th>cpu_lag3</th></tr><tr><td>datetime[μs]</td><td>f64</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>str</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>2022-05-12 18:21:27</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>67.9</td><td>1500.0</td><td>27.5</td><td>0.000262</td><td>0.001397</td><td>43.816</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>42.355</td><td>92.1</td><td>41.381</td><td>46.4</td><td>38.459</td><td>16.9</td></tr><tr><td>2022-05-12 18:21:32</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>72.2</td><td>1500.0</td><td>27.3</td><td>0.000168</td><td>0.000372</td><td>42.355</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>43.816</td><td>67.9</td><td>42.355</td><td>92.1</td><td>41.381</td><td>46.4</td></tr><tr><td>2022-05-12 18:21:37</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>28.9</td><td>1500.0</td><td>26.8</td><td>0.000307</td><td>0.004133</td><td>43.816</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>42.355</td><td>72.2</td><td>43.816</td><td>67.9</td><td>42.355</td><td>92.1</td></tr><tr><td>2022-05-12 18:21:42</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>47.1</td><td>1500.0</td><td>27.9</td><td>0.000366</td><td>0.000353</td><td>43.329</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>43.816</td><td>28.9</td><td>42.355</td><td>72.2</td><td>43.816</td><td>67.9</td></tr><tr><td>2022-05-12 18:21:47</td><td>1.6524e9</td><td>&quot;stream&quot;</td><td>52.3</td><td>1500.0</td><td>28.7</td><td>0.000216</td><td>0.001302</td><td>43.816</td><td>0</td><td>&quot;012&quot;</td><td>&quot;dev2&quot;</td><td>43.329</td><td>47.1</td><td>43.816</td><td>28.9</td><td>42.355</td><td>72.2</td></tr><tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr><tr><td>2022-05-14 18:26:04</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>33.4</td><td>1000.0</td><td>28.5</td><td>0.0</td><td>8.5931e-7</td><td>63.296</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>62.809</td><td>28.6</td><td>63.783</td><td>26.5</td><td>63.296</td><td>33.1</td></tr><tr><td>2022-05-14 18:26:09</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>27.2</td><td>1200.0</td><td>28.5</td><td>1.7596e-7</td><td>8.4981e-7</td><td>62.809</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>63.296</td><td>33.4</td><td>62.809</td><td>28.6</td><td>63.783</td><td>26.5</td></tr><tr><td>2022-05-14 18:26:14</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>26.6</td><td>1200.0</td><td>28.6</td><td>2.1984e-7</td><td>0.000002</td><td>63.783</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>62.809</td><td>27.2</td><td>63.296</td><td>33.4</td><td>62.809</td><td>28.6</td></tr><tr><td>2022-05-14 18:26:19</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>41.3</td><td>1200.0</td><td>26.8</td><td>0.000001</td><td>0.000002</td><td>64.757</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>63.783</td><td>26.6</td><td>62.809</td><td>27.2</td><td>63.296</td><td>33.4</td></tr><tr><td>2022-05-14 18:26:24</td><td>1.6526e9</td><td>&quot;game&quot;</td><td>38.1</td><td>1200.0</td><td>25.9</td><td>4.0726e-7</td><td>4.2922e-7</td><td>64.27</td><td>0</td><td>&quot;002&quot;</td><td>&quot;dev0&quot;</td><td>64.757</td><td>41.3</td><td>63.783</td><td>26.6</td><td>62.809</td><td>27.2</td></tr></tbody></table></div></div></div>
 </div>
 </section>
 </section>
@@ -610,15 +601,6 @@ Finally, we see that the network activity is relevant when the device is streami
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div><style>
-.dataframe > thead > tr,
-.dataframe > tbody > tr {
-  text-align: right;
-  white-space: pre-wrap;
-}
-</style>
-<small>shape: (656_502, 17)</small><table border="1" class="dataframe"><thead><tr><th>state_augmented_reality</th><th>state_game</th><th>state_idle</th><th>state_mining</th><th>state_stream</th><th>cpu</th><th>cpu_freq</th><th>memory</th><th>net_upload_rate</th><th>net_download_rate</th><th>gpu</th><th>temp_lag1</th><th>cpu_lag1</th><th>temp_lag2</th><th>cpu_lag2</th><th>temp_lag3</th><th>cpu_lag3</th></tr><tr><td>u8</td><td>u8</td><td>u8</td><td>u8</td><td>u8</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>67.9</td><td>1500.0</td><td>27.5</td><td>0.000262</td><td>0.001397</td><td>0</td><td>42.355</td><td>92.1</td><td>41.381</td><td>46.4</td><td>38.459</td><td>16.9</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>72.2</td><td>1500.0</td><td>27.3</td><td>0.000168</td><td>0.000372</td><td>0</td><td>43.816</td><td>67.9</td><td>42.355</td><td>92.1</td><td>41.381</td><td>46.4</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>28.9</td><td>1500.0</td><td>26.8</td><td>0.000307</td><td>0.004133</td><td>0</td><td>42.355</td><td>72.2</td><td>43.816</td><td>67.9</td><td>42.355</td><td>92.1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>47.1</td><td>1500.0</td><td>27.9</td><td>0.000366</td><td>0.000353</td><td>0</td><td>43.816</td><td>28.9</td><td>42.355</td><td>72.2</td><td>43.816</td><td>67.9</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>52.3</td><td>1500.0</td><td>28.7</td><td>0.000216</td><td>0.001302</td><td>0</td><td>43.329</td><td>47.1</td><td>43.816</td><td>28.9</td><td>42.355</td><td>72.2</td></tr><tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>33.4</td><td>1000.0</td><td>28.5</td><td>0.0</td><td>8.5931e-7</td><td>0</td><td>62.809</td><td>28.6</td><td>63.783</td><td>26.5</td><td>63.296</td><td>33.1</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>27.2</td><td>1200.0</td><td>28.5</td><td>1.7596e-7</td><td>8.4981e-7</td><td>0</td><td>63.296</td><td>33.4</td><td>62.809</td><td>28.6</td><td>63.783</td><td>26.5</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>26.6</td><td>1200.0</td><td>28.6</td><td>2.1984e-7</td><td>0.000002</td><td>0</td><td>62.809</td><td>27.2</td><td>63.296</td><td>33.4</td><td>62.809</td><td>28.6</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>41.3</td><td>1200.0</td><td>26.8</td><td>0.000001</td><td>0.000002</td><td>0</td><td>63.783</td><td>26.6</td><td>62.809</td><td>27.2</td><td>63.296</td><td>33.4</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>38.1</td><td>1200.0</td><td>25.9</td><td>4.0726e-7</td><td>4.2922e-7</td><td>0</td><td>64.757</td><td>41.3</td><td>63.783</td><td>26.6</td><td>62.809</td><td>27.2</td></tr></tbody></table></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -672,125 +654,6 @@ Finally, we see that the network activity is relevant when the device is streami
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 008
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" src="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" />
-<img alt="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" src="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 012
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/c9e2805fb232be64a3d991d16a941b2e44268d2f659fc06c811ec840e2dcd754.png" src="_images/c9e2805fb232be64a3d991d16a941b2e44268d2f659fc06c811ec840e2dcd754.png" />
-<img alt="_images/62bd6138ca3850873e8f8b791f1b57510f92cdc5de81046afaf7120103d845b7.png" src="_images/62bd6138ca3850873e8f8b791f1b57510f92cdc5de81046afaf7120103d845b7.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 010
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/b6d0716596e13568077b0e116c570a46831e8086d49f8ba967ac4f2413e8938b.png" src="_images/b6d0716596e13568077b0e116c570a46831e8086d49f8ba967ac4f2413e8938b.png" />
-<img alt="_images/5b7cfa1e2a9e931042c6e036131b363d14599b26a289d77e18aa92f8a9b0f59d.png" src="_images/5b7cfa1e2a9e931042c6e036131b363d14599b26a289d77e18aa92f8a9b0f59d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 002
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/b47bc6db40f159bf64f482e5e7e9fa0e6347dc9807d1476214902d0b4897279f.png" src="_images/b47bc6db40f159bf64f482e5e7e9fa0e6347dc9807d1476214902d0b4897279f.png" />
-<img alt="_images/6bebd15467e396c36e00f773cb59c096c5c65e525f438c7dfcc846fd1540f66d.png" src="_images/6bebd15467e396c36e00f773cb59c096c5c65e525f438c7dfcc846fd1540f66d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 004
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/287bf18a728d58ee78704141782a926e9be02b8d342196303cd9f6da0a23f55a.png" src="_images/287bf18a728d58ee78704141782a926e9be02b8d342196303cd9f6da0a23f55a.png" />
-<img alt="_images/cdee7adfaaf617f95fc61b7c12242bdd33ff6aa50695d16bf8eb82cd26bb87c3.png" src="_images/cdee7adfaaf617f95fc61b7c12242bdd33ff6aa50695d16bf8eb82cd26bb87c3.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 014
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/4c04b576c4d972197960082f1bbad293d78001cea4b04228e6a6adbc920aba96.png" src="_images/4c04b576c4d972197960082f1bbad293d78001cea4b04228e6a6adbc920aba96.png" />
-<img alt="_images/c94498e621043b092e92e7dc79eeaf47263b7e5b3abc8196fcc5868cf6a9fe47.png" src="_images/c94498e621043b092e92e7dc79eeaf47263b7e5b3abc8196fcc5868cf6a9fe47.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 011
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/a77bf3f62f0ecefe6eba44a4c18f7fc3d66637ee8d4dfd1e2f2785e6206cfe6c.png" src="_images/a77bf3f62f0ecefe6eba44a4c18f7fc3d66637ee8d4dfd1e2f2785e6206cfe6c.png" />
-<img alt="_images/4dfb94db26f918b5a0d6bde121fd5ed5ce1fc2aed04479e37b96d2175cd426a6.png" src="_images/4dfb94db26f918b5a0d6bde121fd5ed5ce1fc2aed04479e37b96d2175cd426a6.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 009
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" src="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" />
-<img alt="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" src="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 013
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/3dfade45490e86cfc918d3e6c17eeb62495277d9145ef83b7029ce86982a3bcb.png" src="_images/3dfade45490e86cfc918d3e6c17eeb62495277d9145ef83b7029ce86982a3bcb.png" />
-<img alt="_images/227a071f0b741e72e7eac707a63c2713f19ebd035469654c3ecfc8de163c769e.png" src="_images/227a071f0b741e72e7eac707a63c2713f19ebd035469654c3ecfc8de163c769e.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 015
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" src="_images/c909919a02a628cd2b9f6e4b3cfde28c50cde3d6617806cb9a5314ab96c530cc.png" />
-<img alt="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" src="_images/5c1fac1deeaba68a16e40a0c8e400363b1d7624b3ecc6b51f34c68bf9b58c68a.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 007
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" src="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" />
-<img alt="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" src="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 000
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/eee9b42db191a9bb9a359f5495cca734290f84aa63a60d522df18432383067de.png" src="_images/eee9b42db191a9bb9a359f5495cca734290f84aa63a60d522df18432383067de.png" />
-<img alt="_images/f6a241d8f30256b6e722fc242ee587ba3872c951a0e5de79979c50045612cc2c.png" src="_images/f6a241d8f30256b6e722fc242ee587ba3872c951a0e5de79979c50045612cc2c.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 006
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/c26ea36fc18aa6bd23508c518d8903d6796d5c2a11854cf1d0f3de8c19a98e40.png" src="_images/c26ea36fc18aa6bd23508c518d8903d6796d5c2a11854cf1d0f3de8c19a98e40.png" />
-<img alt="_images/9681cc3de6810e1959a54dd58e81ce1d0a7cc54cd6bffa1d1109a84473b82856.png" src="_images/9681cc3de6810e1959a54dd58e81ce1d0a7cc54cd6bffa1d1109a84473b82856.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 003
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/e86b9e61eeb15562f11793718e657d7295757deb644cc397b4c6beab300b0dce.png" src="_images/e86b9e61eeb15562f11793718e657d7295757deb644cc397b4c6beab300b0dce.png" />
-<img alt="_images/1813610f880e80b4f4f04ef8e194d8d0e5733c399301a04f0c7950b0dc9280b9.png" src="_images/1813610f880e80b4f4f04ef8e194d8d0e5733c399301a04f0c7950b0dc9280b9.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 017
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" src="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" />
-<img alt="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" src="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 001
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/05abe1793749408555120f35cff95a6b52d64d6835dce0d00044a08ef77bfd1a.png" src="_images/05abe1793749408555120f35cff95a6b52d64d6835dce0d00044a08ef77bfd1a.png" />
-<img alt="_images/5d61da216e5c5966bc4c24330ddbb66d1fd422ecd11d36d17e03045244564ee3.png" src="_images/5d61da216e5c5966bc4c24330ddbb66d1fd422ecd11d36d17e03045244564ee3.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 016
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/75f1306a848e2366efc677b3c21e0b8ff4d5c0fe4e5980dc59ea92dba20aeb7a.png" src="_images/75f1306a848e2366efc677b3c21e0b8ff4d5c0fe4e5980dc59ea92dba20aeb7a.png" />
-<img alt="_images/727171d1f297523073fb891398109929f477bf33c648e5241469d3e4c16fd56d.png" src="_images/727171d1f297523073fb891398109929f477bf33c648e5241469d3e4c16fd56d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 005
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" src="_images/9ba8957c0b6e611232053187f8dec8a0648210dcb5c37f14952dbe6c3206f79d.png" />
-<img alt="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" src="_images/e2b8bc129f092f5ebb59f93e0cc47904083451fe002abb7f3b3f16a9ee5a1e00.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>run: 018
-final mse: 286.6004638671875
-</pre></div>
-</div>
-<img alt="_images/9dd880528d004acf85b1be74e147c678f8ef825836191d5d02c106a67e4e1a19.png" src="_images/9dd880528d004acf85b1be74e147c678f8ef825836191d5d02c106a67e4e1a19.png" />
-<img alt="_images/87905fa7bd3962401daa2d3c091ca52075df8d2114730b8c3beb4f15e877d421.png" src="_images/87905fa7bd3962401daa2d3c091ca52075df8d2114730b8c3beb4f15e877d421.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>87026
 </pre></div>
 </div>
 </div>

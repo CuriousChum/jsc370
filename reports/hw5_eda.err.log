@@ -28,151 +28,56 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-
-# same colour dict you already use
-STATE_COLORS = {
-    "mining":    "#d62728",
-    "streaming": "#1f77b4",
-    "VR":        "#2ca02c",
-    "idle":      "#8c564b",
-}
-
-# ------------------------------------------------------------------
-def plot_time_series_plotly(plotdf, colname, show=True):
-    """
-    One interactive plotly trace + translucent state bands.
-
-    Returns a go.Figure.
-    """
-    fig = go.Figure()
-
-    # main line
-    fig.add_trace(go.Scatter(
-        x=plotdf["time"],
-        y=plotdf[colname],
-        name=colname,
-        mode="lines",
-        line=dict(width=2, color="black"),
-        hovertemplate=f"time=%{{x}}<br>{colname}=%{{y}}<extra></extra>"
-    ))
-
-    # translucent blocks for each contiguous state run
-    ymin, ymax = plotdf[colname].min(), plotdf[colname].max()
-    for state, color in STATE_COLORS.items():
-        mask = plotdf["state"] == state
-        if not mask.any():
-            continue
-        # find contiguous True segments
-        edges = mask.astype(int).diff().fillna(0)
-        starts = plotdf["time"][edges == 1]
-        ends   = plotdf["time"][edges == -1]
-
-        # handle run that goes to the end
-        if mask.iloc[0]:
-            starts = pd.concat([pd.Series(plotdf["time"].iloc[0]), starts])
-        if mask.iloc[-1]:
-            ends = pd.concat([ends, pd.Series(plotdf["time"].iloc[-1])])
-
-        for s, e in zip(starts, ends):
-            fig.add_shape(
-                type="rect",
-                x0=s, x1=e,
-                y0=ymin, y1=ymax,
-                fillcolor=color,
-                opacity=0.25,
-                line_width=0,
-                layer="below",
-            )
-
-    # legend proxy squares
-    for st, color in STATE_COLORS.items():
-        fig.add_trace(go.Scatter(
-            x=[None], y=[None],
-            mode="markers",
-            marker=dict(size=10, color=color, opacity=0.4),
-            showlegend=True,
-            name=st,
-            hoverinfo="skip"
-        ))
-
-    fig.update_layout(
-        margin=dict(l=60, r=30, t=40, b=40),
-        xaxis_title="time",
-        yaxis_title=colname,
-        legend_title="states",
+df_feat = df_all.group_by("pi_id", "run_id").map_groups(add_lags)
+df_feat = (
+    df_feat.with_columns(
+          pl.col("temp")
+            .rolling_mean(5, center=False)
+            .over(["run_id"])
+            .alias("temp_ma"),
+          pl.col("cpu")
+            .rolling_mean(5, center=False)
+            .over(["run_id"])
+            .alias("cpu_ma")
+      )
+)
+dev = "dev0"
+plotdf = sample_section(
+    df_feat.filter(
+        (pl.col("pi_id") == dev) & (pl.col("run_id") == chosen[dev])
     )
-
-    if show:
-        fig.show()
-    return fig
-
-# ------------------------------------------------------------------
-def plot_mult_time_series_plotly(df, colnames, ylabs=None, titles=None,
-                                 suptitle=None, shared_x=True, height=300):
-    """
-    Create one vertically-stacked interactive figure with n rows.
-
-    Returns a plotly.graph_objects.Figure
-    """
-    n = len(colnames)
-    ylabs   = colnames if ylabs  is None else ylabs
-    titles  = colnames if titles is None else titles
-    specs   = [[{}] for _ in range(n)]
-
-    fig = make_subplots(rows=n, cols=1,
-                        shared_xaxes=shared_x,
-                        vertical_spacing=0.04,
-                        subplot_titles=titles,
-                        specs=specs)
-
-    for i, col in enumerate(colnames, start=1):
-        subfig = plot_time_series_plotly(df, col, show=False)
-        # add every trace & shape to the big canvas
-        for tr in subfig.data:
-            fig.add_trace(tr, row=i, col=1)
-        for sh in subfig.layout.shapes or []:
-            fig.add_shape(sh, row=i, col=1)
-
-        fig.update_yaxes(title_text=ylabs[i-1], row=i, col=1)
-
-    if suptitle:
-        fig.update_layout(title_text=suptitle, title_x=0.5)
-
-    fig.update_layout(height=height*n,
-                      legend_title="states",
-                      margin=dict(l=60, r=30, t=60 if suptitle else 30, b=40))
-    fig.show()
-    return fig
-
-
-def add_lags(grp, n_lags=3):
-    for k in range(1, n_lags + 1):
-        grp = grp.with_columns(
-            pl.col("temp").shift(k).alias(f"temp_lag{k}"),
-            pl.col("cpu").shift(k).alias(f"cpu_lag{k}")
-        )
-    return grp.drop_nulls(subset=[f"temp_lag{n_lags}"])
-
-np.random.seed(1000)
-chosen = {}
-for dev, runs in df_all[["pi_id", "run_id"]].unique().group_by("pi_id"):
-    chosen[dev[0]] = np.random.choice(runs["run_id"], size=1)[0]
-
-def sample_section(df):
-    n_take = math.ceil(len(df) * 0.1)
-    start = np.random.randint(0, len(df) - n_take)  
-    return df[start:start + n_take - 1] # be safe, don't crash for no reason
+)
+plotdf = plotdf.to_pandas()
 ------------------
 
 
 [31m---------------------------------------------------------------------------[39m
 [31mModuleNotFoundError[39m                       Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[3][39m[32m, line 1[39m
-[32m----> [39m[32m1[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mplotly[39;00m[34;01m.[39;00m[34;01mgraph_objects[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mgo[39;00m
-[32m      2[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mplotly[39;00m[34;01m.[39;00m[34;01msubplots[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m make_subplots
-[32m      4[39m [38;5;66;03m# same colour dict you already use[39;00m
+[32m/tmp/ipykernel_1982/2432904399.py[39m in [36m?[39m[34m()[39m
+[32m     16[39m     df_feat.filter(
+[32m     17[39m         (pl.col([33m"pi_id"[39m) == dev) & (pl.col([33m"run_id"[39m) == chosen[dev])
+[32m     18[39m     )
+[32m     19[39m )
+[32m---> [39m[32m20[39m plotdf = plotdf.to_pandas()
 
-[31mModuleNotFoundError[39m: No module named 'plotly'
+[32m/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/polars/dataframe/frame.py[39m in [36m?[39m[34m(self, use_pyarrow_extension_array, **kwargs)[39m
+[32m   2439[39m             return self._to_pandas_with_object_columns(
+[32m   2440[39m                 use_pyarrow_extension_array=use_pyarrow_extension_array, **kwargs
+[32m   2441[39m             )
+[32m   2442[39m 
+[32m-> [39m[32m2443[39m         return self._to_pandas_without_object_columns(
+[32m   2444[39m             self, use_pyarrow_extension_array=use_pyarrow_extension_array, **kwargs
+[32m   2445[39m         )
+
+[32m/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/polars/dataframe/frame.py[39m in [36m?[39m[34m(self, df, use_pyarrow_extension_array, **kwargs)[39m
+[32m   2490[39m     ) -> pd.DataFrame:
+[32m   2491[39m         [38;5;28;01mif[39;00m [38;5;28;01mnot[39;00m df.width:  [38;5;66;03m# Empty dataframe, cannot infer schema from batches[39;00m
+[32m   2492[39m             [38;5;28;01mreturn[39;00m pd.DataFrame()
+[32m   2493[39m 
+[32m-> [39m[32m2494[39m         record_batches = df._df.to_pandas()
+[32m   2495[39m         tbl = pa.Table.from_batches(record_batches)
+[32m   2496[39m         [38;5;28;01mif[39;00m use_pyarrow_extension_array:
+[32m   2497[39m             return tbl.to_pandas(
+
+[31mModuleNotFoundError[39m: No module named 'pyarrow'
 
