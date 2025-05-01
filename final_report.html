@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Analysis on the Relationship CPU Utilization and Temperature on Raspberry Pi Devices &#8212; JSC370 Final Project</title>
+    <title>Analysis on the Relationship Between Resource Usage and Temperature on Raspberry Pi Devices &#8212; JSC370 Final Project</title>
   
   
   
@@ -170,7 +170,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    Analysis on the Relationship CPU Utilization and Temperature on Raspberry Pi Devices
+                    Analysis on the Relationship Between Resource Usage and Temperature on Raspberry Pi Devices
                 </a>
             </li>
         </ul>
@@ -219,50 +219,18 @@
 <div class="article-header-buttons">
 
 
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/CuriousChum/jsc370" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
+<a href="https://curiouschum.github.io/jsc370/final_report.html" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
    title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   <i class="fab fa-github"></i>
   </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/CuriousChum/jsc370/issues/new?title=Issue%20on%20page%20%2Ffinal_report.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
 
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
 </a>
-</li>
-      
-  </ul>
-</div>
 
 
 
@@ -361,7 +329,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Analysis on the Relationship CPU Utilization and Temperature on Raspberry Pi Devices</h1>
+    <h1>Analysis on the Relationship Between Resource Usage and Temperature on Raspberry Pi Devices</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -379,15 +347,19 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-description">Dataset Description</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-wrangling">Data Wrangling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis">Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over Time</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-per-device-per-state">Comparison per Device per State</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis">Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over Time</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-per-device-per-state">Comparison per Device per State</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling">Modelling</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-analysis">Feature Analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection">Model Selection</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling">Modelling</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
             </nav>
@@ -400,8 +372,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="analysis-on-the-relationship-cpu-utilization-and-temperature-on-raspberry-pi-devices">
-<h1>Analysis on the Relationship CPU Utilization and Temperature on Raspberry Pi Devices<a class="headerlink" href="#analysis-on-the-relationship-cpu-utilization-and-temperature-on-raspberry-pi-devices" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="analysis-on-the-relationship-between-resource-usage-and-temperature-on-raspberry-pi-devices">
+<h1>Analysis on the Relationship Between Resource Usage and Temperature on Raspberry Pi Devices<a class="headerlink" href="#analysis-on-the-relationship-between-resource-usage-and-temperature-on-raspberry-pi-devices" title="Link to this heading">#</a></h1>
 <p>Link to Github page: <a class="github reference external" href="https://github.com/CuriousChum/jsc370">CuriousChum/jsc370</a></p>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
@@ -507,157 +479,126 @@ document.write(`
 </table>
 </div>
 <div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesSplit</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;statsmodels&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell tag_remove-input docutils container">
 </div>
 <div class="cell tag_remove-input docutils container">
 </div>
-</section>
 </section>
 <section id="exploratory-data-analysis">
-<h2>Exploratory Data Analysis<a class="headerlink" href="#exploratory-data-analysis" title="Link to this heading">#</a></h2>
+<h3>Exploratory Data Analysis<a class="headerlink" href="#exploratory-data-analysis" title="Link to this heading">#</a></h3>
 <p>Since each run is a time-series data, comparing each feature directly might not be ideal. Instead, the comparison will either be done over time, or on the differences.</p>
 <section id="comparison-over-time">
-<h3>Comparison over Time<a class="headerlink" href="#comparison-over-time" title="Link to this heading">#</a></h3>
+<h4>Comparison over Time<a class="headerlink" href="#comparison-over-time" title="Link to this heading">#</a></h4>
 <p>Since it’s infeasible to visualize and compare all runs with more than 30,000 observations, we instead sample one run from different devices and look at random sections within it. <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-time0</span></code>, <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-time1</span></code>, <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-time2</span></code>, <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig-time3</span></code> are sections of runs that are chosen uniformly at random for each device.</p>
 <div class="cell tag_remove-input docutils container">
 </div>
 <div class="cell tag_remove-input docutils container">
 </div>
 <figure class="align-center" id="fig-time0">
-<img alt="images/fig-time0.png" src="images/fig-time0.png" />
+<img alt="_images/fig-time0.png" src="_images/fig-time0.png" />
 </figure>
 <figure class="align-center" id="fig-time1">
-<img alt="images/fig-time1.png" src="images/fig-time1.png" />
+<img alt="_images/fig-time1.png" src="_images/fig-time1.png" />
 </figure>
 <figure class="align-center" id="fig-time2">
-<img alt="images/fig-time2.png" src="images/fig-time2.png" />
+<img alt="_images/fig-time2.png" src="_images/fig-time2.png" />
 </figure>
 <figure class="align-center" id="fig-time3">
-<img alt="images/fig-time3.png" src="images/fig-time3.png" />
+<img alt="_images/fig-time3.png" src="_images/fig-time3.png" />
 </figure>
-<p>Firstly, for completeness, as mentioned before, we notice that GPU activity is nonexistent, and so it is dropped.
-The plots shows several notable things: device temperature tends to move to a certain semi-constant value on each state, similarly CPU usage tends to move to a constant value with some occasional jumps every state. CPU frequency, however, appears to erratically jump from high to low, this is a phenomenon called throttling, where the CPU dynamically changes its frequency due to some circumstance, either due to low usage (as to preserve energy), or due to overheating, which is not seen here.
-Finally, we see that the network activity is relevant when the device is streaming, specifically, the download rate increases. However, on any other states, the device shows little to no network activity, so the upload rate will be  dropped from future analyses.</p>
+<p>The plots shows several notable things: device temperature tends to move to a certain semi-constant value on each state but with a noticable jitter. Similarly, CPU usage tends to move to a constant value with noticable jitters and occasional spikes every state. CPU frequency, on the other hand, appears to erratically jump from high to low, this is a phenomenon called throttling, where the CPU dynamically changes its frequency due to some circumstance, either due to low usage (as to preserve energy), or due to overheating, which is not seen here. Finally, we observe that there is only network activity when the device is streaming. Finally, memory usage is consistent within states with a more noticable variation when the device is streaming or running an augmented reality application.</p>
 </section>
 <section id="comparison-per-device-per-state">
-<h3>Comparison per Device per State<a class="headerlink" href="#comparison-per-device-per-state" title="Link to this heading">#</a></h3>
-<p>Then, we visualize the distribution of features per device colored by state. The following figures shows the aggregated distribution over all runs. Net download rate is not included in this visualization due to its very small value.</p>
+<h4>Comparison per Device per State<a class="headerlink" href="#comparison-per-device-per-state" title="Link to this heading">#</a></h4>
+<p>Then, we visualize the distribution of features per device colored by state. The following figures shows the aggregated distribution over all runs. Network upload/download rates are scaled up to the scale of KBps in this visualization due to be more noticable.</p>
 <div class="cell tag_remove-input docutils container">
 </div>
 <figure class="align-center" id="fig-pa0">
-<img alt="images/pa0.png" src="images/pa0.png" />
+<img alt="_images/pa0.png" src="_images/pa0.png" />
 </figure>
 <figure class="align-center" id="fig-pa1">
-<img alt="images/pa1.png" src="images/pa1.png" />
+<img alt="_images/pa1.png" src="_images/pa1.png" />
 </figure>
 <figure class="align-center" id="fig-pa2">
-<img alt="images/pa2.png" src="images/pa2.png" />
+<img alt="_images/pa2.png" src="_images/pa2.png" />
 </figure>
 <figure class="align-center" id="fig-pa3">
-<img alt="images/pa3.png" src="images/pa3.png" />
+<img alt="_images/pa3.png" src="_images/pa3.png" />
 </figure>
+<p>There are notable patterns in the distribution of each state: temperature and CPU usage is approximately unimodal for each state; CPU frequency in each state are either maximum or a specific value with not much in between; memory usage being quite consistent with similar centers, albeit having different spread/variance between device; network is activity is dominantly zero.</p>
 </section>
 <section id="feature-engineering">
-<h3>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Link to this heading">#</a></h3>
-<p>Resource activity data can contain a lot of noise especially for the CPU, upload/download rate (network), and temperature perhaps due to inherent jitter or measurement variance. For those columns, we will calculate a moving average to smoothen them out. The window size and weighing method is chosen based on the type of resource. Specifically, CPU and upload/download rate is unweighted, while temperature is weighted with an exponential window.</p>
-<p>Memory usage on its own does affect the utilization of other resources since this can mean nothing is going on at the moment. So, the percentage change in RAM usage is added to account for memory usage by the device for each application.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">add_lags</span><span class="p">(</span><span class="n">grp</span><span class="p">,</span> <span class="n">n_lags</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_lags</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">grp</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;temp_lag</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cpu_lag</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="k">return</span> <span class="n">grp</span><span class="o">.</span><span class="n">drop_nulls</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;temp_lag</span><span class="si">{</span><span class="n">n_lags</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
-
-<span class="n">df_feat</span> <span class="o">=</span> <span class="n">df_all</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">&quot;pi_id&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map_groups</span><span class="p">(</span><span class="n">add_lags</span><span class="p">)</span>
-<span class="n">df_feat</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">df_feat</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
-          <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">rolling_mean</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">over</span><span class="p">([</span><span class="s2">&quot;run_id&quot;</span><span class="p">])</span>
-            <span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;temp_ma&quot;</span><span class="p">),</span>
-          <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">rolling_mean</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">over</span><span class="p">([</span><span class="s2">&quot;run_id&quot;</span><span class="p">])</span>
-            <span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;cpu_ma&quot;</span><span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<h4>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Link to this heading">#</a></h4>
+<p>Motivated by findings in the EDA phase, we will create the following columns as a means to transform the original features:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cpu_freq_mean</span></code>: the average CPU frequency within a period of a state in each run per device. Since the CPU throttles to save power on low intensity tasks, it will produce less heat as a consequence; however, depending on how long it runs on the higher or lower frequency, the thermal contribution may vary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cpu_ma</span></code>: a moving average CPU utilization. The CPU measurements might contain a lot of noise due since the method of measuring CPU utilization is usually sampling. Taking the moving average helps reduce noise in our data. The window chosen for this is 4 lags. The reasoning is that too much lag will exacerbate the effect of jumps in CPU activity, oversmoothing it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temp_ma</span></code>: a moving average device temperature. Similar to CPU usage, temperature measurements might not be very accurate. The window chosen is 4 lags as well, with the same reasoning to prevent oversmoothing.</p></li>
+</ul>
+<p>Network activity metrics used will be the one in KBps, since their value are extremely small.</p>
 </section>
 </section>
 <section id="modelling">
-<h2>Modelling<a class="headerlink" href="#modelling" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_enc</span> <span class="o">=</span> <span class="n">df_feat</span><span class="o">.</span><span class="n">to_dummies</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;pi_id&quot;</span><span class="p">])</span>
-<span class="n">X</span>  <span class="o">=</span> <span class="n">df_enc</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">,</span> <span class="s2">&quot;time_stamp&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">)</span>
-<span class="n">X_</span> <span class="o">=</span> <span class="n">df_feat</span><span class="o">.</span><span class="n">to_dummies</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">,</span> <span class="s2">&quot;time_stamp&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">,</span> <span class="s2">&quot;pi_id&quot;</span><span class="p">)</span>
-<span class="n">y</span>  <span class="o">=</span> <span class="n">df_feat</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span>
+<h3>Modelling<a class="headerlink" href="#modelling" title="Link to this heading">#</a></h3>
+<p>In this phase, we will attempt to build a model that can predict device temperature under specific workloads. Due to our data being highly structured, we can expect to have accurate models at the expense of generalization; our models will be good at predicting temperature under similar workloads, but might be very inaccurate for workloads that are dissimilar to these usages.</p>
+<p>Furthermore, the model will be trained to predict the temperature moving average, this is to reduce the noise that is learned by the model that might lead to overfitting.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<section id="feature-analysis">
+<h4>Feature Analysis<a class="headerlink" href="#feature-analysis" title="Link to this heading">#</a></h4>
+<p>To begin, we perform some analysis to reduce the number of features in hopes of improving model generalizations. The first feature we examine is <code class="docutils literal notranslate"><span class="pre">pi_id</span></code>. We wish to check whether there are meaningful differences between the different configurations in CPU frequency and RAM size. To do this, we perform a likelihood ratio test between a linear mixed model that uses <code class="docutils literal notranslate"><span class="pre">pi_id</span></code> and one that doesn’t.</p>
+<p>The likelihood ratio test indicates that indeed there is a difference between devices, so this feature will be kept.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/tanloui2/courses/jsc370/.venv/lib/python3.11/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesSplit</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">mse</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">XGBRegressor</span>
-
-<span class="n">tss</span> <span class="o">=</span> <span class="n">TimeSeriesSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">60</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">xgb</span> <span class="o">=</span> <span class="n">XGBRegressor</span><span class="p">(</span>
-    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-    <span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-    <span class="n">subsample</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-    <span class="n">colsample_bytree</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-    <span class="n">objective</span><span class="o">=</span><span class="s2">&quot;reg:squarederror&quot;</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
-<span class="p">)</span>
-
-<span class="n">models</span> <span class="o">=</span> <span class="p">{</span> <span class="sa">f</span><span class="s2">&quot;dev</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span>
-    <span class="n">XGBRegressor</span><span class="p">(</span>
-        <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-        <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-        <span class="n">subsample</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-        <span class="n">colsample_bytree</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-        <span class="n">objective</span><span class="o">=</span><span class="s2">&quot;reg:squarederror&quot;</span><span class="p">,</span>
-        <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
-    <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LR = 135.40,  df = 3,  p = 0.0000
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="model-selection">
+<h4>Model Selection<a class="headerlink" href="#model-selection" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">run</span><span class="p">,</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">df_all</span><span class="p">[[</span><span class="s2">&quot;run_id&quot;</span><span class="p">,</span> <span class="s2">&quot;pi_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">():</span>
-    <span class="n">rmse1</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">rmse2</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;run: </span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">run_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df_all</span><span class="p">[</span><span class="s2">&quot;run_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">run</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># unwrap (val,)</span>
-    <span class="k">for</span> <span class="n">train_idx</span><span class="p">,</span> <span class="n">val_idx</span> <span class="ow">in</span> <span class="n">tss</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">run_idx</span><span class="p">):</span>
-        <span class="n">xgb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_idx</span><span class="p">])</span>
-        <span class="n">models</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_idx</span><span class="p">])</span>
-        <span class="n">y_preds1</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">val_idx</span><span class="p">])</span>
-        <span class="n">y_preds2</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_</span><span class="p">[</span><span class="n">val_idx</span><span class="p">])</span>
-        <span class="n">rmse1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">y_preds1</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">val_idx</span><span class="p">]))</span>
-        <span class="n">rmse2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">y_preds2</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">val_idx</span><span class="p">]))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rmse1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rmse2</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">mse_</span> <span class="ow">in</span> <span class="n">mse_whole</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mse_</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">mse_</span> <span class="ow">in</span> <span class="n">mse_part</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mse_</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/6e704282fb84796d0d9ee8ad03bff11de284536c4880e958e8a10a60b026b4d6.png" src="_images/6e704282fb84796d0d9ee8ad03bff11de284536c4880e958e8a10a60b026b4d6.png" />
 </div>
+</div>
+</section>
+</section>
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
@@ -731,15 +672,19 @@ Finally, we see that the network activity is relevant when the device is streami
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-description">Dataset Description</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-wrangling">Data Wrangling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis">Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over Time</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-per-device-per-state">Comparison per Device per State</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis">Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over Time</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-per-device-per-state">Comparison per Device per State</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling">Modelling</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-analysis">Feature Analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection">Model Selection</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling">Modelling</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
   </nav></div>
