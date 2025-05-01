@@ -1,0 +1,6 @@
+format: jb-book
+root: midterm
+
+chapters:
+  - file: hw5_eda.ipynb
+
