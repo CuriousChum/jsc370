@@ -1,7 +1,16 @@
 title: JSC370 Final Project
 author: Louis Ryan Tan
-# logo: foo.png
 
+only_build_toc_files: true
+
+exclude_patterns: [".venv"]
+sphinx:
+  config:
+    numfig: true
+    numfig_format:
+      figure: "Figure %s"
+      table:  "Table %s"
+      
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
@@ -10,26 +19,16 @@ execute:
 # Define the name of the latex output file for PDF builds
 latex:
   latex_documents:
-    targetname: proj.tex
+    targetname: doc.tex
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/CuriousChum/jsc370  # Online location of your book
+  url: https://curiouschum.github.io/jsc370/final_report.html  # Online location of your book
   # path_to_book: docs  # Optional path to your book, relative to the repository root
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
-  use_issues_button: true
   use_repository_button: true
 
-sphinx:
-  config:
-    numfig: true
-    numfig_format:
-      figure: "Figure %s"
-      table:  "Table %s"
-      code-block: "Listing %s"
-
-only_build_toc_files: true

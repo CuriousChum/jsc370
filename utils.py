@@ -114,5 +114,5 @@ def plot_mult_time_series(df, colnames, ylabs=None, titles=None, suptitle=None):
         ax_.set_xlabel('time (ticks)')
         ax_.set_ylabel(ylabs[i])
     fig.legend(handles=patches, loc='upper right', title="states")
-    plt.tight_layout()
+    fig.tight_layout()
     return fig, axs
