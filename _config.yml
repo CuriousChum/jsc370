@@ -4,6 +4,7 @@ author: Louis Ryan Tan
 only_build_toc_files: true
 
 exclude_patterns: [".venv"]
+
 sphinx:
   config:
     numfig: true

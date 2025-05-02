@@ -104,7 +104,7 @@ def plot_time_series(plotdf, colname, ax=None, show=True, retpatches=False):
     return legend_patches if retpatches else None
 
 def plot_mult_time_series(df, colnames, ylabs=None, titles=None, suptitle=None):
-    fig, axs = plt.subplots(nrows=len(colnames), figsize=(12, 3 * len(colnames)))
+    fig, axs = plt.subplots(nrows=len(colnames), figsize=(12, 3 * len(colnames) + 2))
     if suptitle is not None:
         fig.suptitle(suptitle)
     ylabs = colnames if ylabs is None else ylabs

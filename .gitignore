@@ -6,4 +6,6 @@
 **/*.zip
 
 # custom
-./midterm/foo
+
+# MyST build outputs
+_build
