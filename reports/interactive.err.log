@@ -28,42 +28,39 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-np.random.seed(1000)
-chosen = {}
-for dev, runs in df_all[["pi_id", "run_id"]].unique().group_by("pi_id"):
-    chosen[dev[0]] = np.random.choice(runs["run_id"], size=1)[0]
+dev = "dev3"
+plotdf = df_all.filter(
+    (pl.col("pi_id") == dev) & (pl.col("run_id") == chosen[dev])
+).to_pandas()
 
-df_feat = df_all.group_by("pi_id", "run_id").map_groups(add_lags)
-df_feat = (
-    df_feat.with_columns(
-          pl.col("temp")
-            .rolling_mean(5, center=False)
-            .over(["run_id"])
-            .alias("temp_ma"),
-          pl.col("cpu")
-            .rolling_mean(5, center=False)
-            .over(["run_id"])
-            .alias("cpu_ma")
-      )
+fig = px.scatter(
+    plotdf,
+    x="cpu",
+    y="temp",
+    color="state",
+    title="CPU Usage vs. Temperature",
+    labels={
+        "cpu": "CPU utilization (%)",
+        "temp": "Temperature (°C)",
+        "state": "State"
+    },
+    hover_data=["state"]
 )
-dev = "dev0"
-plotdf = sample_section(
-    df_feat.filter(
-        (pl.col("pi_id") == dev) & (pl.col("run_id") == chosen[dev])
-    )
-)
-plotdf = plotdf.to_pandas()
+
+fig.show()
 ------------------
 
 
 [31m---------------------------------------------------------------------------[39m
 [31mModuleNotFoundError[39m                       Traceback (most recent call last)
-[32m/tmp/ipykernel_2099/2721703055.py[39m in [36m?[39m[34m()[39m
-[32m     21[39m     df_feat.filter(
-[32m     22[39m         (pl.col([33m"pi_id"[39m) == dev) & (pl.col([33m"run_id"[39m) == chosen[dev])
-[32m     23[39m     )
-[32m     24[39m )
-[32m---> [39m[32m25[39m plotdf = plotdf.to_pandas()
+[32m/tmp/ipykernel_2022/2679408216.py[39m in [36m?[39m[34m()[39m
+[32m      1[39m dev = [33m"dev3"[39m
+[32m      2[39m plotdf = df_all.filter(
+[32m      3[39m     (pl.col([33m"pi_id"[39m) == dev) & (pl.col([33m"run_id"[39m) == chosen[dev])
+[32m----> [39m[32m4[39m ).to_pandas()
+[32m      5[39m 
+[32m      6[39m fig = px.scatter(
+[32m      7[39m     plotdf,
 
 [32m/opt/hostedtoolcache/Python/3.13.3/x64/lib/python3.13/site-packages/polars/dataframe/frame.py[39m in [36m?[39m[34m(self, use_pyarrow_extension_array, **kwargs)[39m
 [32m   2439[39m             return self._to_pandas_with_object_columns(
